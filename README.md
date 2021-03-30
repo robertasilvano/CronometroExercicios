@@ -1,5 +1,5 @@
 # CronometroExercicios
-Projeto em desenvolvimento para a disciplina de Organização e Arquitetura de Computadores, utilizando o simulador 8085.
+Projeto em desenvolvimento para a disciplina de Organização e Arquitetura de Computadores, utilizando o simulador 8085 e Assembly, em dupla com a colega July Chassot.
 
 O trabalho consiste em um cronometro para a realização de exercícios.
 
