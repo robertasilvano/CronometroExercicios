@@ -1,0 +1,80 @@
+.DATA DDh 00h
+54h 50h 3Ah 
+51h 54h 3Ah 
+54h 45h 3Ah 
+54h 44h 3Ah 
+.ORG 00h 20h
+CDh 79h 20h 
+16h 04h 
+21h 00h 00h 
+DBh 00h 
+D6h 30h 
+77h 
+23h 
+77h 
+23h 
+15h 
+C4h 08h 20h 
+21h 28h E0h 
+3Ah 01h 00h 
+C6h 30h 
+77h 
+21h 01h 00h 
+35h 
+C4h 14h 20h 
+21h 50h E0h 
+3Ah 03h 00h 
+C6h 30h 
+77h 
+CDh 3Eh 20h 
+CDh 4Fh 20h 
+CDh 6Ah 20h 
+21h 03h 00h 
+35h 
+C4h 24h 20h 
+76h 
+21h 78h E0h 
+3Ah 05h 00h 
+C6h 30h 
+77h 
+21h 05h 00h 
+35h 
+C4h 3Eh 20h 
+C9h 
+3Ah 03h 00h 
+0Eh 01h 
+B9h 
+C4h 59h 20h 
+C9h 
+21h 90h E0h 
+3Ah 07h 00h 
+C6h 30h 
+77h 
+21h 07h 00h 
+35h 
+C4h 59h 20h 
+C9h 
+3Ah 04h 00h 
+21h 05h 00h 
+77h 
+3Ah 06h 00h 
+21h 07h 00h 
+77h 
+C9h 
+11h DDh 00h 
+21h 00h E0h 
+0Eh 04h 
+CDh 85h 20h 
+C9h 
+06h 03h 
+CDh 8Fh 20h 
+0Dh 
+C4h 85h 20h 
+C9h 
+1Ah 
+77h 
+1Ch 
+23h 
+05h 
+C4h 8Fh 20h 
+C9h 
