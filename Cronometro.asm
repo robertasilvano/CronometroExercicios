@@ -16,7 +16,7 @@
 
 .org 2000h
 
-	;call printar
+	call printar
 
 	MVI D, 4h ; move o valor imediato 4h pro registrador D (contador das variáveis de entrada)
 	LXI H, 0000h ; move o valor imediato 0h pro registrador H, para zerar o endereço
@@ -52,8 +52,7 @@ qtd_exercicios:
 	MOV M, A ; move o valor do acumulador para a tela
 
 	CALL tempo_exercicio
-
-	nop
+	CALL f_alarme
 	CALL checa_descanso
 
 	CALL set_valores_iniciais
@@ -77,8 +76,6 @@ tempo_exercicio:
 	DCR M ; decrementa 1 da memória apontada por HL (endereço var3 não fixa)
 
 	CNZ tempo_exercicio
-
-	CALL f_alarme
 
 	RET
 
@@ -105,10 +102,13 @@ tempo_descanso:
 	LXI H, 0007h ; coloca no registrador H o endereço da var4 não fixa
 	DCR M ; decrementa 1 da memória apontada por HL (endereço var4 não fixa)
 
-
 	CNZ tempo_descanso
 
 	CALL f_alarme
+
+	POP PSW
+	POP PSW
+	POP PSW
 
 	RET
 
