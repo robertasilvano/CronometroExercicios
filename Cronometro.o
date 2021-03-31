@@ -67,7 +67,10 @@ C9h
 CDh 85h 20h 
 C9h 
 06h 03h 
-CDh 8Fh 20h 
+CDh 93h 20h 
+7Dh 
+C6h 25h 
+6Fh 
 0Dh 
 C4h 85h 20h 
 C9h 
@@ -76,5 +79,5 @@ C9h
 1Ch 
 23h 
 05h 
-C4h 8Fh 20h 
+C4h 93h 20h 
 C9h 
