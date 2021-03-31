@@ -15,14 +15,14 @@ D6h 30h
 23h 
 15h 
 C4h 08h 20h 
-21h 28h E0h 
+21h 04h E0h 
 3Ah 01h 00h 
 C6h 30h 
 77h 
 21h 01h 00h 
 35h 
 C4h 14h 20h 
-21h 50h E0h 
+21h 2Ch E0h 
 3Ah 03h 00h 
 C6h 30h 
 77h 
@@ -33,7 +33,7 @@ CDh 6Ah 20h
 35h 
 C4h 24h 20h 
 76h 
-21h 78h E0h 
+21h 54h E0h 
 3Ah 05h 00h 
 C6h 30h 
 77h 
@@ -46,7 +46,7 @@ C9h
 B9h 
 C4h 59h 20h 
 C9h 
-21h 90h E0h 
+21h 7Ch E0h 
 3Ah 07h 00h 
 C6h 30h 
 77h 

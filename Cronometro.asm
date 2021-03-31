@@ -4,7 +4,9 @@
 ; entrada 4: Tempo de descanso entre exercícios - 6h / 7h
 
 .define
-	end_tela E000h
+	end_texto E000h
+	end_num E004h
+	soma_tela 25h
 
 .data DDh
 	DB 54h, 50h, 3Ah ; TP:
@@ -31,7 +33,7 @@ entradas:
 CNZ entradas
 
 tempo_preparo:
-	LXI H, end_tela+28h ; coloca no registrador H o endereço da tela
+	LXI H, end_num ; coloca no registrador H o endereço da tela
 	LDA 1h ; carrega no acumulador o valor no endereço 1h (endereço var1 não fixa)
 	ADI 30h ; adiciona 30h do valor do acumulador (binário puro -> ASCII)
 	MOV M, A ; move o valor do acumulador para a tela
@@ -42,7 +44,7 @@ tempo_preparo:
 	CNZ tempo_preparo
 
 qtd_exercicios:
-	LXI H, end_tela+50h; coloca no registrador H o endereço da tela
+	LXI H, end_num+28h; coloca no registrador H o endereço da tela
 	LDA 3h ; carrega no acumulador o valor no endereço 3h (endereço var2 não fixa)
 	ADI 30h ; adiciona 30h do valor do acumulador (binário puro -> ASCII)
 	MOV M, A ; move o valor do acumulador para a tela
@@ -60,7 +62,7 @@ qtd_exercicios:
 	HLT
 
 tempo_exercicio:
-	LXI H, end_tela+78h ; coloca no registrador H o endereço da tela
+	LXI H, end_num+50h ; coloca no registrador H o endereço da tela
 	LDA 5h ; carrega no acumulador o valor no endereço 5h (enndereço var3 não fixa)
 	ADI 30h ; adiciona 30h do valor do acumulador (binário puro -> ASCII)
 	MOV M, A ; move o valor do acumulador para a tela
@@ -88,7 +90,7 @@ checa_descanso:
 
 tempo_descanso:
 	
-	LXI H, end_tela+90h ; coloca no registrador H o endereço da tela
+	LXI H, end_num+78h ; coloca no registrador H o endereço da tela
 	LDA 7h ; carrega no acumulador o valor no endereço 7h (enndereço var4 não fixa)
 	ADI 30h ; adiciona 30h do valor do acumulador (binário puro -> ASCII)
 	MOV M, A ; move o valor do acumulador para a tela
@@ -113,29 +115,33 @@ set_valores_iniciais:
 	RET
 
 printar:
-
+	
 	LXI D, DDh ; carrega o primeiro endereço do .data no registrador D
-	LXI H, end_tela ; carrega o endereço da tela no registrador H
+	LXI H, end_texto
 	
 	MVI C, 4h ; move o valor imediato 4h pro registrador C
 		    ; esse valor é um contador de linhas
-	call total_linhas
-	
-	RET
-
-total_linhas:
-
-	MVI B, 3h ; move o valor imediato 3h pro registrador B
-		    ; esse valor é um contador de caracteres
-	;aqui tem q incrementar o endereço da tela pra proxima linha mas ainda n sei como rs
 	call linha
 	
-	DCR C ; decrementa o contador de linhas
-	CNZ total_linhas ; se ainda tiverem linhas para serem printadas, chama novamente a função
-
 	RET
 
 linha:
+	
+	MVI B, 3h ; move o valor imediato 3h pro registrador B
+		    ; esse valor é um contador de caracteres
+	
+	call caracter
+
+	MOV A, L
+	ADI soma_tela
+	MOV L, A
+	
+	DCR C ; decrementa o contador de linhas
+	CNZ linha ; se ainda tiverem linhas para serem printadas, chama novamente a função
+
+	RET
+
+caracter:
 	LDAX D ; carrega o valor apontado pelo registrador D no acumulador
 	MOV M, A ; move o valor do acumulador (letra) para o endereço de memória apontado por M (endereço da tela)
 	
@@ -144,6 +150,14 @@ linha:
 
 	DCR B ; decrementa o contador de caracteres
 
-	CNZ linha
+	CNZ caracter
 
 	RET
+
+
+
+;TP: E000h - E0003
+;QT: E028h - E02Bh
+;TE: E050h - E053h
+;TD: E078h - E07Bh
+
