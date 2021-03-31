@@ -10,13 +10,13 @@
 
 .data DDh
 	DB 54h, 50h, 3Ah ; TP:
-	DB 51h, 54h, 3Ah ; QT:
+	DB 51h, 45h, 3Ah ; QE:
 	DB 54h, 45h, 3Ah ; TE:
 	DB 54h, 44h, 3Ah ; TD:
 
 .org 2000h
 
-	call printar
+	;call printar
 
 	MVI D, 4h ; move o valor imediato 4h pro registrador D (contador das variáveis de entrada)
 	LXI H, 0000h ; move o valor imediato 0h pro registrador H, para zerar o endereço
@@ -43,21 +43,27 @@ tempo_preparo:
 
 	CNZ tempo_preparo
 
+	CALL f_alarme
+
 qtd_exercicios:
 	LXI H, end_num+28h; coloca no registrador H o endereço da tela
 	LDA 3h ; carrega no acumulador o valor no endereço 3h (endereço var2 não fixa)
 	ADI 30h ; adiciona 30h do valor do acumulador (binário puro -> ASCII)
 	MOV M, A ; move o valor do acumulador para a tela
 
-	call tempo_exercicio
-	call checa_descanso
+	CALL tempo_exercicio
 
-	call set_valores_iniciais
+	nop
+	CALL checa_descanso
+
+	CALL set_valores_iniciais
 	
 	LXI H, 0003h ; coloca no registrador H o endereço da var2 não fixa
 	DCR M ; decrementa 1 da memória apontada por HL (endereço var2 não fixa)	
 
 	CNZ qtd_exercicios
+
+	CALL f_alarme
 
 	HLT
 
@@ -72,6 +78,8 @@ tempo_exercicio:
 
 	CNZ tempo_exercicio
 
+	CALL f_alarme
+
 	RET
 
 checa_descanso:
@@ -84,7 +92,6 @@ checa_descanso:
 	CMP C ; se estiver no ultimo exercicio, z=1, se não, z=0
 
 	CNZ tempo_descanso
-
 
 	RET	 
 
@@ -100,6 +107,8 @@ tempo_descanso:
 
 
 	CNZ tempo_descanso
+
+	CALL f_alarme
 
 	RET
 
@@ -155,9 +164,24 @@ caracter:
 	RET
 
 
+f_alarme:
+	MVI B, 8h
+	MVI A, 80h 
+	
+	CALL alarme
 
-;TP: E000h - E0003
-;QT: E028h - E02Bh
-;TE: E050h - E053h
-;TD: E078h - E07Bh
+	MVI A, FFh
+	OUT 0h
 
+	MVI A, 0h
+	OUT 0h
+
+	RET
+
+alarme:
+	OUT 0h
+	RRC
+	DCR B
+	CNZ alarme
+
+	RET
