@@ -16,12 +16,14 @@
 
 .org 2000h
 
-	call printar
+	;call printar
 
 	MVI D, 4h ; move o valor imediato 4h pro registrador D (contador das variáveis de entrada)
 	LXI H, 0000h ; move o valor imediato 0h pro registrador H, para zerar o endereço
-	
+
 entradas:
+	CALL delay
+	CALL aguarda_entrada
 	IN 0h ; pega o input da porta 0h (teclado) e coloca no acumulador
 	SUI 30h ; subtrai 30h do valor do acumulador (ASCII -> binário puro)
 	MOV M, A ; move o valor do acumulador pra o valor apontado por M. Este valor será fixo.
@@ -30,13 +32,41 @@ entradas:
 	INX H ; incrementa o valor do registrador B
 	DCR D ; decrementa o contador de variáveis
 
-CNZ entradas
+	CNZ entradas
+
+	CALL tempo_preparo
+
+delay:
+	
+	MVI B, 2Fh
+	dl: 
+		MVI C, FFh
+		dec1: DCR C
+		JNZ dec1
+	
+	DCR B
+	CNZ dl
+	
+	RET
+
+
+aguarda_entrada:
+	IN 0h
+	MVI C, 0h
+
+	CMP C
+
+	JZ aguarda_entrada 
+
+	RET
 
 tempo_preparo:
 	LXI H, end_num ; coloca no registrador H o endereço da tela
 	LDA 1h ; carrega no acumulador o valor no endereço 1h (endereço var1 não fixa)
 	ADI 30h ; adiciona 30h do valor do acumulador (binário puro -> ASCII)
 	MOV M, A ; move o valor do acumulador para a tela
+
+	CALL delay
 	
 	LXI H, 0001h ; coloca no registrador H o endereço da var1 não fixa
 	DCR M ; decrementa 1 da memória apontada por HL (endereço var1 não fixa)
@@ -54,6 +84,7 @@ qtd_exercicios:
 	CALL tempo_exercicio
 	CALL f_alarme
 	CALL checa_descanso
+	CALL checa_alarme
 
 	CALL set_valores_iniciais
 	
@@ -61,6 +92,8 @@ qtd_exercicios:
 	DCR M ; decrementa 1 da memória apontada por HL (endereço var2 não fixa)	
 
 	CNZ qtd_exercicios
+
+	CALL delay
 
 	CALL f_alarme
 
@@ -71,6 +104,8 @@ tempo_exercicio:
 	LDA 5h ; carrega no acumulador o valor no endereço 5h (enndereço var3 não fixa)
 	ADI 30h ; adiciona 30h do valor do acumulador (binário puro -> ASCII)
 	MOV M, A ; move o valor do acumulador para a tela
+
+	CALL delay
 	
 	LXI H, 0005h ; coloca no registrador H o endereço da var3 não fixa
 	DCR M ; decrementa 1 da memória apontada por HL (endereço var3 não fixa)
@@ -90,7 +125,7 @@ checa_descanso:
 
 	CNZ tempo_descanso
 
-	RET	 
+	RET
 
 tempo_descanso:
 	
@@ -99,17 +134,27 @@ tempo_descanso:
 	ADI 30h ; adiciona 30h do valor do acumulador (binário puro -> ASCII)
 	MOV M, A ; move o valor do acumulador para a tela
 	
+	CALL delay
+
 	LXI H, 0007h ; coloca no registrador H o endereço da var4 não fixa
 	DCR M ; decrementa 1 da memória apontada por HL (endereço var4 não fixa)
 
 	CNZ tempo_descanso
 
-	CALL f_alarme
+	RET
 
-	POP PSW
-	POP PSW
-	POP PSW
+checa_alarme:
+	; precisa saber se já ta no ultimo exercício
+		; se não, chama o alarme e depois retorna para qtd_exercicios
+		; se sim, não chama o alarme e depois retorna para qtd_exercicios
 
+	LDA 3h
+	MVI C, 1h
+
+	CMP C
+
+	CNZ f_alarme
+	
 	RET
 
 set_valores_iniciais:
@@ -165,23 +210,13 @@ caracter:
 
 
 f_alarme:
-	MVI B, 8h
-	MVI A, 80h 
 	
-	CALL alarme
-
 	MVI A, FFh
 	OUT 0h
 
+	CALL delay
+
 	MVI A, 0h
 	OUT 0h
-
-	RET
-
-alarme:
-	OUT 0h
-	RRC
-	DCR B
-	CNZ alarme
 
 	RET

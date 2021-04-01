@@ -4,9 +4,10 @@
 54h 45h 3Ah 
 54h 44h 3Ah 
 .ORG 00h 20h
-CDh 88h 20h 
 16h 04h 
 21h 00h 00h 
+CDh 1Ah 20h 
+CDh 27h 20h 
 DBh 00h 
 D6h 30h 
 77h 
@@ -14,52 +15,71 @@ D6h 30h
 77h 
 23h 
 15h 
-C4h 08h 20h 
+C4h 05h 20h 
+CDh 30h 20h 
+06h 2Fh 
+0Eh FFh 
+0Dh 
+C2h 1Eh 20h 
+05h 
+C4h 1Ch 20h 
+C9h 
+DBh 00h 
+0Eh 00h 
+B9h 
+CAh 27h 20h 
+C9h 
 21h 04h E0h 
 3Ah 01h 00h 
 C6h 30h 
 77h 
+CDh 1Ah 20h 
 21h 01h 00h 
 35h 
-C4h 14h 20h 
-CDh ABh 20h 
+C4h 30h 20h 
+CDh DAh 20h 
 21h 2Ch E0h 
 3Ah 03h 00h 
 C6h 30h 
 77h 
-CDh 47h 20h 
-CDh ABh 20h 
-CDh 58h 20h 
-CDh 79h 20h 
+CDh 6Ch 20h 
+CDh DAh 20h 
+CDh 80h 20h 
+CDh 9Eh 20h 
+CDh A8h 20h 
 21h 03h 00h 
 35h 
-C4h 27h 20h 
-CDh ABh 20h 
+C4h 46h 20h 
+CDh 1Ah 20h 
+CDh DAh 20h 
 76h 
 21h 54h E0h 
 3Ah 05h 00h 
 C6h 30h 
 77h 
+CDh 1Ah 20h 
 21h 05h 00h 
 35h 
-C4h 47h 20h 
+C4h 6Ch 20h 
 C9h 
 3Ah 03h 00h 
 0Eh 01h 
 B9h 
-C4h 62h 20h 
+C4h 8Ah 20h 
 C9h 
 21h 7Ch E0h 
 3Ah 07h 00h 
 C6h 30h 
 77h 
+CDh 1Ah 20h 
 21h 07h 00h 
 35h 
-C4h 62h 20h 
-CDh ABh 20h 
-F1h 
-F1h 
-F1h 
+C4h 8Ah 20h 
+C9h 
+3Ah 03h 00h 
+0Eh 01h 
+B9h 
+C4h DAh 20h 
 C9h 
 3Ah 04h 00h 
 21h 05h 00h 
@@ -71,33 +91,26 @@ C9h
 11h DDh 00h 
 21h 00h E0h 
 0Eh 04h 
-CDh 94h 20h 
+CDh C3h 20h 
 C9h 
 06h 03h 
-CDh A2h 20h 
+CDh D1h 20h 
 7Dh 
 C6h 25h 
 6Fh 
 0Dh 
-C4h 94h 20h 
+C4h C3h 20h 
 C9h 
 1Ah 
 77h 
 1Ch 
 23h 
 05h 
-C4h A2h 20h 
+C4h D1h 20h 
 C9h 
-06h 08h 
-3Eh 80h 
-CDh BBh 20h 
 3Eh FFh 
 D3h 00h 
+CDh 1Ah 20h 
 3Eh 00h 
 D3h 00h 
-C9h 
-D3h 00h 
-0Fh 
-05h 
-C4h BBh 20h 
 C9h 
