@@ -16,7 +16,7 @@
 
 .org 2000h
 
-	;call printar
+	call printar
 
 	MVI D, 4h ; move o valor imediato 4h pro registrador D (contador das variáveis de entrada)
 	LXI H, 0000h ; move o valor imediato 0h pro registrador H, para zerar o endereço
@@ -38,23 +38,25 @@ entradas:
 
 delay:
 	
-	MVI B, 2Fh
-	dl: 
-		MVI C, FFh
-		dec1: DCR C
-		JNZ dec1
+	MVI B, 2Fh ; move o valor imediato 2Fh para o registrador B
+	decB: 
+		MVI C, FFh ; move o valor imediato FFh para o registrador C
+		decC: DCR C ; decrementa o registrador C
+		JNZ decC ; se ainda não estiver zerado, chama a função de decrementar C de novo
 	
-	DCR B
-	CNZ dl
-	
+	DCR B ; decrementa o registrador B
+	CNZ decB ; se ainda não estiver zerado, chama a função de decrementar B de novo
+
 	RET
 
 
 aguarda_entrada:
-	IN 0h
-	MVI C, 0h
+	IN 0h ; pega a entrada na porta 0h e coloca no acumulador
+	MVI C, 0h ; move o valor imediato 0h para o registrador C
 
-	CMP C
+	CMP C ; compara o valor do acumulador e do registrador C
+		; se forem iguais, ainda não teve input, e portando chama essa função de novo
+		; se não forem iguais, já foi dado input então retorna
 
 	JZ aguarda_entrada 
 
@@ -148,10 +150,9 @@ checa_alarme:
 		; se não, chama o alarme e depois retorna para qtd_exercicios
 		; se sim, não chama o alarme e depois retorna para qtd_exercicios
 
-	LDA 3h
-	MVI C, 1h
-
-	CMP C
+	LDA 3h ; carrega no acumulador o valor no endereço 1h (endereço var1 não fixa)
+	MVI C, 1h ; move o valor imediato 1h para o registrador C (esse valor representa o ultimo exercicio)
+	CMP C ; se estiver no ultimo exercicio, z=1, se não, z=0
 
 	CNZ f_alarme
 	
@@ -186,9 +187,9 @@ linha:
 	
 	call caracter
 
-	MOV A, L
-	ADI soma_tela
-	MOV L, A
+	MOV A, L ; move o valor do registrador L (4 bits finais do endereço da tela) para o acumulador
+	ADI soma_tela ; incrementa o valor da tela para a próxima linha
+	MOV L, A ; move o valor do acumulador para o registrador L, tendo então o endereço da próxima linha em HL
 	
 	DCR C ; decrementa o contador de linhas
 	CNZ linha ; se ainda tiverem linhas para serem printadas, chama novamente a função
@@ -211,12 +212,12 @@ caracter:
 
 f_alarme:
 	
-	MVI A, FFh
-	OUT 0h
+	MVI A, FFh ; move o valor imediato FFh para o acumulador
+	OUT 0h ; coloca na saída 0h o valor do acumulador (acende todos os leds)
 
 	CALL delay
 
-	MVI A, 0h
-	OUT 0h
+	MVI A, 0h ; move o valor imediato 0h para o acumulador
+	OUT 0h ; coloca na saída 0h o valor do acumulador (apaga todos os leds)
 
 	RET
