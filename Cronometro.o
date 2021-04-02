@@ -37,7 +37,7 @@ C6h 30h
 CDh 1Dh 20h 
 21h 01h 00h 
 35h 
-C4h 33h 20h 
+F4h 33h 20h 
 CDh DDh 20h 
 21h 2Ch E0h 
 3Ah 03h 00h 
@@ -50,7 +50,7 @@ CDh A1h 20h
 CDh ABh 20h 
 21h 03h 00h 
 35h 
-C4h 49h 20h 
+F4h 49h 20h 
 CDh 1Dh 20h 
 CDh DDh 20h 
 76h 
@@ -61,10 +61,10 @@ C6h 30h
 CDh 1Dh 20h 
 21h 05h 00h 
 35h 
-C4h 6Fh 20h 
+F4h 6Fh 20h 
 C9h 
 3Ah 03h 00h 
-0Eh 01h 
+0Eh 00h 
 B9h 
 C4h 8Dh 20h 
 C9h 
@@ -75,10 +75,10 @@ C6h 30h
 CDh 1Dh 20h 
 21h 07h 00h 
 35h 
-C4h 8Dh 20h 
+F4h 8Dh 20h 
 C9h 
 3Ah 03h 00h 
-0Eh 01h 
+0Eh 00h 
 B9h 
 C4h DDh 20h 
 C9h 

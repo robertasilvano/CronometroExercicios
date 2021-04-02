@@ -73,7 +73,7 @@ tempo_preparo:
 	LXI H, 0001h ; coloca no registrador H o endereço da var1 não fixa
 	DCR M ; decrementa 1 da memória apontada por HL (endereço var1 não fixa)
 
-	CNZ tempo_preparo
+	CP tempo_preparo
 
 	CALL f_alarme
 
@@ -93,7 +93,7 @@ qtd_exercicios:
 	LXI H, 0003h ; coloca no registrador H o endereço da var2 não fixa
 	DCR M ; decrementa 1 da memória apontada por HL (endereço var2 não fixa)	
 
-	CNZ qtd_exercicios
+	CP qtd_exercicios
 
 	CALL delay
 
@@ -112,7 +112,7 @@ tempo_exercicio:
 	LXI H, 0005h ; coloca no registrador H o endereço da var3 não fixa
 	DCR M ; decrementa 1 da memória apontada por HL (endereço var3 não fixa)
 
-	CNZ tempo_exercicio
+	CP tempo_exercicio
 
 	RET
 
@@ -121,8 +121,8 @@ checa_descanso:
 		 ; se sim, não deve ter tempo de descanso pq já finalizou. então retorna pra função qtd_exercicios
 		 ; se não, executa o código do tempo_descanso
 
-	LDA 3h ; carrega no acumulador o valor no endereço 1h (endereço var1 não fixa)
-	MVI C, 1h ; move o valor imediato 1h para o registrador C (esse valor representa o ultimo exercicio)
+	LDA 3h ; carrega no acumulador o valor no endereço 0h (endereço var1 não fixa)
+	MVI C, 0h ; move o valor imediato 1h para o registrador C (esse valor representa o ultimo exercicio)
 	CMP C ; se estiver no ultimo exercicio, z=1, se não, z=0
 
 	CNZ tempo_descanso
@@ -141,7 +141,7 @@ tempo_descanso:
 	LXI H, 0007h ; coloca no registrador H o endereço da var4 não fixa
 	DCR M ; decrementa 1 da memória apontada por HL (endereço var4 não fixa)
 
-	CNZ tempo_descanso
+	CP tempo_descanso
 
 	RET
 
@@ -151,7 +151,7 @@ checa_alarme:
 		; se sim, não chama o alarme e depois retorna para qtd_exercicios
 
 	LDA 3h ; carrega no acumulador o valor no endereço 1h (endereço var1 não fixa)
-	MVI C, 1h ; move o valor imediato 1h para o registrador C (esse valor representa o ultimo exercicio)
+	MVI C, 0h ; move o valor imediato 0h para o registrador C (esse valor representa o ultimo exercicio)
 	CMP C ; se estiver no ultimo exercicio, z=1, se não, z=0
 
 	CNZ f_alarme
